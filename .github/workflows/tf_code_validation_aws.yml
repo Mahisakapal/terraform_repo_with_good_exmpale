@@ -9,9 +9,9 @@ on:
         required: false
         default: 'aws_samples/create_ec2'
   push:
-    branches: [ main ]
+    branches: [ Master ]
   pull_request:
-    branches: [ main ]
+    branches: [ Master ]
 
 jobs:
   tf_code_check:
@@ -44,13 +44,14 @@ jobs:
         
         echo "** Running Terraform Plan**"
         terraform plan
+
+        echo "** Running Terraform Apply**"
+        terraform apply -auto-approve
         
-#        echo "** Running Terraform Apply**"
-#        terraform apply -auto-approve
       working-directory: ${{ github.event.inputs.tfpath }}
-    - name: Terraform Destroy
-      run: |
-        echo "** Running Terraform Destroy**"
-        terraform plan -destroy
-#        terraform destroy -auto-approve
-      working-directory: ${{ github.event.inputs.tfpath }}
+#     - name: Terraform Destroy
+#       run: |
+#         echo "** Running Terraform Destroy**"
+#         terraform plan -destroy
+# #        terraform destroy -auto-approve
+#       working-directory: ${{ github.event.inputs.tfpath }}
